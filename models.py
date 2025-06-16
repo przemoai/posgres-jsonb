@@ -2,20 +2,21 @@ from datetime import datetime
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
+
+class Base(AsyncAttrs, DeclarativeBase):
+    pass
 
 
 class Entity(Base):
     __tablename__ = "entities"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
     created_by = Column(String, nullable=False)
-    data = Column(
-        JSONB
-    )  # Changed from JSON to JSONB for better performance and operator support
+    data = Column(JSONB)
 
 
 class EntityCreate(BaseModel):
@@ -28,3 +29,6 @@ class EntityRead(BaseModel):
     created_at: datetime
     created_by: str
     data: dict
+
+    class Config:
+        from_attributes = True
