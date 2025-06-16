@@ -10,7 +10,7 @@ from typing import Optional, AsyncGenerator
 import json
 import re
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL: str = os.getenv("DATABASE_URL")
 
 async_engine = create_async_engine(
     DATABASE_URL,

@@ -1,0 +1,17 @@
+[project]
+name = "postgres-jsonb"
+version = "0.1.0"
+
+[dependency-groups]
+dev = [
+    "ty>=0.0.1a10",
+]
+
+[tool.ty.src]
+root = "./src"
+
+[tool.ty.rules]
+unused-ignore-comment = "warn"
+redundant-cast = "ignore"
+possibly-unbound-attribute = "error"
+possibly-unbound-import = "error"
